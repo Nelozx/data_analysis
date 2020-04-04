@@ -23,7 +23,7 @@ def collect_and_process_data():
         data_arr = np.loadtxt(data_file, delimiter=',', dtype='str', skiprows=1)
 
         # 去掉双隐藏好
-        cln_data_arr = np.core.defchararray.replace(data_arr, '"', 'd')
+        cln_data_arr = np.core.defchararray.replace(data_arr, '"', '')
         cln_data_arr_list.append(cln_data_arr)
 
     return cln_data_arr_list
