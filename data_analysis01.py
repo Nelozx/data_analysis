@@ -2,10 +2,10 @@ import os
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 # 比较共享单车各用户类别的平均骑行时间趋势
 # python3 -m pip install numpy 安装numpy
 # 数据: https://video.mugglecode.com/data.zip
+from numpy.core._multiarray_umath import ndarray
 
 data_path = 'data/bikeshare'
 data_filenames = ['2017-q1_trip_history_data.csv', '2017-q2_trip_history_data.csv',
@@ -38,6 +38,7 @@ def get_mean_duration_by_byte(data_arr_list, member_type):
     for data_arr in data_arr_list:
         # [:, -1] 所有行的最后一列
         bool_arr = (data_arr[:, -1] == member_type)
+
         filtered_arr = data_arr[bool_arr]
         # 时间（分钟）
         mean_duration = np.mean(filtered_arr[:, 0].astype('float') / 1000 / 60)
@@ -57,7 +58,6 @@ def save_and_show_results(member_mean_duration_list, casual_mean_duration_list):
     # 构造多维数组
     mean_duration_arr = np.array([member_mean_duration_list, casual_mean_duration_list]).transpose()
     # 上面的这个，这是两行四列的数据，要是想存四行两列，需要转置，这时候用transpose()方法
-    # 数据存储默认科学计数法，如果不愿意，那么fmt可以指定小数点几位
     np.savetxt(
         'data/bikeshare/mean_duration.csv',  # 保存路径/文件名
         mean_duration_arr,  # 保存哪个变量
